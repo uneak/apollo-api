@@ -33,7 +33,7 @@ const copyGraphqlResolvers = () => {
   )
     .pipe(dest("build/graphql/resolvers"))
     .pipe(buildGraphqlResolvers())
-    .pipe(rename({ basename: "resolver.graphql", extname: ".js" }))
+    .pipe(rename({ basename: "resolvers.graphql", extname: ".js" }))
     .pipe(dest("build/var"));
 };
 

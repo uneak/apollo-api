@@ -7,8 +7,9 @@
   "scripts": {
     "build": "gulp",
     "start": "node build/index.js",
-    "debug": "nodemon --inspect=0.0.0.0:9229 build/index.js",
-    "docker": "docker build --tag uneacoin-api . && docker compose up"
+    "docker-build": "gulp && docker build --tag uneacoin-api .",
+    "docker-start": "docker compose up",
+    "docker-stop": "docker compose down"
   },
   "dependencies": {
     "@babel/runtime": "^7.15.4",

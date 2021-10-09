@@ -22,8 +22,18 @@ RUN yarn build
 # Production image, copy all the files and start
 FROM node:16-alpine AS runner
 WORKDIR /app
-COPY --from=build /app/build .
+ENV NODE_ENV production
+
+RUN addgroup -g 1001 -S nodejs
+RUN adduser -S api -u 1001
+
+COPY --from=build /app/public ./public
+COPY --from=build --chown=api:nodejs /app/build ./build
 COPY --from=prod_deps /app/node_modules ./node_modules
+COPY --from=build /app/package.json ./package.json
+
+USER api
+
 EXPOSE 4000
 
-#CMD ["node", "index.js"]
+CMD ["yarn", "start"]

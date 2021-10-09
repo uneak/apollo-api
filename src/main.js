@@ -12,12 +12,15 @@ import getMongoClient from "./lib/core/mongo/mongo-client";
 const expressApp = express();
 const httpServer = http.createServer(expressApp);
 const mongoClient = getMongoClient({ url: "mongodb://mongo:27017/api" });
+const cache = getCache({ host: "redis", port: "6379" });
+const dataSources = getDataSources({ mongoClient });
+const schema = getSchema();
 
 const apolloServer = new ApolloServer({
-  schema: getSchema(),
+  schema,
   plugins: [ApolloServerPluginDrainHttpServer({ httpServer })],
-  cache: getCache({ host: "redis://cache:6379" }),
-  dataSources: getDataSources({ mongoClient }),
+  cache,
+  dataSources,
 });
 
 mongoClient.connect(() => {

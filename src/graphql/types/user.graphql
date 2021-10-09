@@ -4,46 +4,6 @@ type User inherits AbstractNode, AbstractTimestamp {
     lastName: JSON
     email: String!
     password: String!
-    avatar: Media
-    birthDate: Date
-    fax: String
-    telephone: String
-    gender: String
-    body: RichText
-    country: String
-    locality: String
-    region: String
-    postalCode: String
-    coordinates: Point
-    isLocked: Boolean
-    lockUntil: Date
-}
-
-input UserInput {
-    _id: ID
-    userName: String!
-    firstName: String!
-    lastName: String!
-    email: String!
-    avatar: JSON
-    birthDate: Date
-    fax: String
-    telephone: String
-    gender: String
-    body: RichTextInput
-    country: String
-    locality: String
-    region: String
-    postalCode: String
-    coordinates: Point
-}
-
-input SignupInput {
-    userName: String!
-    firstName: String
-    lastName: String
-    email: String!
-    password: String!
 }
 
 type Query {
@@ -54,7 +14,5 @@ type Query {
 }
 
 type Mutation {
-    signup(values: SignupInput): User
-    updateUser(values: UserInput): User
     removeUser(_id: ID!): User
 }
