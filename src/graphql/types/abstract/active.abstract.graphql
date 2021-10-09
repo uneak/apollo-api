@@ -1,0 +1,4 @@
+type AbstractActive {
+    activatedAt: Date
+    desactivedAt: Date
+}

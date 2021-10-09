@@ -1,0 +1,5 @@
+type AbstractDescribe {
+    title: String!
+    body: String
+    media: String
+}

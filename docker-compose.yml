@@ -1,0 +1,36 @@
+version: '3.8'
+
+services:
+ app:
+  container_name: app
+  build:
+   context: .
+  ports:
+   - 4000:4000
+   - 9229:9229
+  environment:
+   - SERVER_PORT=4000
+   - MONGO_URL=mongodb://mongo:27017/api
+   - REDIS_URL=redis://cache:6379
+  volumes:
+   - ./:/app
+  command: node index.js
+
+ mongo:
+  image: mongo:4.2.8
+  container_name: mongo
+  ports:
+   - 27017:27017
+  volumes:
+   - mongodb:/data/db
+   - mongodb_config:/data/configdb
+
+ redis:
+  image: "redis:alpine"
+  container_name: cache
+  expose:
+    - 6379
+
+volumes:
+ mongodb:
+ mongodb_config:

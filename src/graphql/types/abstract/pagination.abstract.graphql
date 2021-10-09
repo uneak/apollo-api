@@ -1,0 +1,23 @@
+@alias((T) => T + 's')
+type AbstractPagination<T> inherits AbstractNode {
+    docs: [T]
+    totalDocs: Int
+    limit: Int
+    hasPrevPage: Boolean
+    hasNextPage: Boolean
+    page: Int
+    totalPages: Int
+    offset: Int
+    prevPage: Int
+    nextPage: Int
+    pagingCounter: Int
+    meta: JSON
+}
+
+input PaginationFilters {
+    offset: Int
+    page: Int
+    limit: Int
+    sort: JSON
+    find: JSON
+}

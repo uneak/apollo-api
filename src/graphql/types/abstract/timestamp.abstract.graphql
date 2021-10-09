@@ -1,0 +1,4 @@
+type AbstractTimestamp {
+    createdAt: Date
+    updatedAt: Date
+}
