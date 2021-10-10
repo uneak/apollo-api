@@ -8,8 +8,8 @@
     "build": "gulp",
     "start": "node build/index.js",
     "docker-build": "gulp && docker build --tag uneacoin-api .",
-    "docker-start": "docker compose up",
-    "docker-stop": "docker compose down"
+    "docker-start": "NODE_ENV=development && docker-compose --env-file ./config/${NODE_ENV}.env up ",
+    "docker-stop": "NODE_ENV=development && docker-compose --env-file ./config/${NODE_ENV}.env down"
   },
   "dependencies": {
     "@babel/runtime": "^7.15.4",

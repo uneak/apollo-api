@@ -3,36 +3,67 @@ version: '3.8'
 services:
  app:
   container_name: app
+  profiles: ["development", "production"]
+  depends_on:
+   - mongo
+   - redis
+  restart: always
   build:
    context: .
+   dockerfile: Dockerfile-${NODE_ENV}
   ports:
-   - 4000:4000
-   - 9229:9229
-  environment:
-   - SERVER_PORT=4000
-   - MONGO_URL=mongodb://mongo:27017/api
-   - REDIS_URL=redis
+   - ${API_PUBLISHED_PORT}:${API_TARGET_PORT}
+  env_file:
+   - config/${NODE_ENV}.env
   volumes:
    - ./build:/app/build
    - ./public:/app/public
   command: yarn start
 
  mongo:
-  image: mongo:4.2.8
+  image: "mongo:${MONGO_VERSION}"
   container_name: mongo
+  profiles: ["development", "production"]
+  restart: always
   ports:
-   - 27017:27017
+   - ${MONGO_PUBLISHED_PORT}:${MONGO_TARGET_PORT}
   volumes:
    - mongodb:/data/db
    - mongodb_config:/data/configdb
 
  redis:
-  image: "redis:alpine"
+  image: "redis:${REDIS_VERSION}"
   container_name: redis
+  profiles: ["development", "production"]
+  restart: always
+  ports:
+   - ${REDIS_PUBLISHED_PORT}:${REDIS_TARGET_PORT}
   expose:
-    - 6379
+   - ${REDIS_TARGET_PORT}
   volumes:
    - redis:/data
+
+#  redis-commander:
+#   container_name: redis-commander
+#   profiles: ["development"]
+#   hostname: redis-commander
+#   image: rediscommander/redis-commander:latest
+#   restart: always
+#   environment:
+#    - REDIS_HOSTS=local:redis:${REDIS_TARGET_PORT}
+#   ports:
+#    - "8081:8081"
+#   depends_on:
+#    - redis
+
+#  mongo-express:
+#   image: mongo-express
+#   container_name: mongo-express
+#   profiles: ["development"]
+#   ports:
+#    - 8081:8081
+#   depends_on:
+#    - mongo
 
 volumes:
  mongodb:

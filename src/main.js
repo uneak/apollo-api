@@ -13,6 +13,7 @@ const expressApp = express();
 const httpServer = http.createServer(expressApp);
 const mongoClient = getMongoClient({ url: "mongodb://mongo:27017/api" });
 const cache = getCache({ host: "redis", port: "6379" });
+
 const dataSources = getDataSources({ mongoClient });
 const schema = getSchema();
 
